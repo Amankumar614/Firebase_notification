@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:notification/notificationService.dart/local_notification.dart';
 import 'package:notification/views/DemoScreen.dart';
 
@@ -15,18 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    // when app is closed
-    // FirebaseMessaging.instance.getInitialMessage().then((Message) {
-    //   // print("FirebaseMessaging.instance.getInitialMessage");
-    //   if (Message!= null) {
-    //     print("new notification");
-    //     if(Message.data['_id']){
-    //       Navigator.push(context,MaterialPageRoute(builder: ((context) => DemoScreen(id: Message.data['_id']))));
-    //     }
-        
-    //   }
-    // });
-
+    // When app is closed
     FirebaseMessaging.instance.getInitialMessage().then(
       (message) {
         print("FirebaseMessaging.instance.getInitialMessage");
@@ -47,8 +36,6 @@ class _HomePageState extends State<HomePage> {
     );
 
 
-
-
   // This is working fine
     // when app is in forground
     FirebaseMessaging.onMessage.listen((Message) {
@@ -61,23 +48,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    // Our app in the background state
 
-
-
-
-    // FirebaseMessaging.onMessageOpenedApp.listen((Message) {
-    //   print("FirebaseMessaging.onMessageOpenedApp.listen");
-    //   if (Message.notification != null) {
-    //     print(Message.notification!.title);
-    //     print(Message.notification!.body);
-    //     print("message.data22 ${Message.data['_id']}");
-    //     //  LocalNotificationPlugin.createAndDisplayNotification(Message);
-    //   }
-    // });
-
-
-
+  // When app is in the recent tab
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) {
         print("FirebaseMessaging.onMessageOpenedApp.listen");
@@ -85,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           print(message.notification!.title);
           print(message.notification!.body);
           print("message.data22 ${message.data['_id']}");
-          // LocalNotificationPlugin.createAndDisplayNotification(message);
+          LocalNotificationPlugin.createAndDisplayNotification(message);
         }
       },
     );
@@ -96,12 +68,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification App"),
+        backgroundColor: Colors.white,
+        title: Text("Firebase Notification App",style: TextStyle(color: Colors.black),),
         actions: [
         ],
       ),
-      body: Center(
-        child: Text('Push Notification'),
+      body: Container(
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/firebase.png"),fit: BoxFit.fitWidth)),
+        child: Center(
+          
+          child: Text('Push Notification'),
+        ),
       ),
     );
   }
